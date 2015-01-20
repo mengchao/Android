@@ -14,7 +14,7 @@ public class ActivityCommon extends Activity {
     private static final String CREATE_KEY = "create";
 
     // String for LogCat documentation
-    protected static String TAG;
+    protected String TAG;
 
     // Lifecycle counters
     private int mCreate, mRestart, mStart, mResume;
@@ -33,9 +33,10 @@ public class ActivityCommon extends Activity {
         // Has previous state been saved?
         if (savedInstanceState != null) {
 
-            // TODO:
-            // Restore value of counters from saved state
-            // Only need 4 lines of code, one for every count variable
+            mRestart = savedInstanceState.getInt(RESTART_KEY);
+            mResume = savedInstanceState.getInt(RESUME_KEY);
+            mStart = savedInstanceState.getInt(START_KEY);
+            mCreate = savedInstanceState.getInt(CREATE_KEY);
 
         }
 
@@ -121,9 +122,10 @@ public class ActivityCommon extends Activity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        // TODO:
-        // Save state information with a collection of key-value pairs
-        // 4 lines of code, one for every count variable
+        savedInstanceState.putInt(RESTART_KEY, mRestart);
+        savedInstanceState.putInt(RESUME_KEY, mResume);
+        savedInstanceState.putInt(START_KEY, mStart);
+        savedInstanceState.putInt(CREATE_KEY, mCreate);
 
     }
 

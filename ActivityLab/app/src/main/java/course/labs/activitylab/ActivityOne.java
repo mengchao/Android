@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class ActivityOne extends ActivityCommon {
 
-    static {
+    {
         TAG = "Lab-ActivityOne";
     }
 
