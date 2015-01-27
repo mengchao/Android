@@ -1,9 +1,11 @@
 package course.labs.fragmentslab;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity implements
 		FriendsFragment.SelectionListener {
@@ -12,6 +14,8 @@ public class MainActivity extends Activity implements
 
 	private FriendsFragment mFriendsFragment;
 	private FeedFragment mFeedFragment;
+
+    private FragmentManager mFragmentManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +30,27 @@ public class MainActivity extends Activity implements
 			mFriendsFragment = new FriendsFragment();
 
 			//TODO 1 - add the FriendsFragment to the fragment_container
-			
-			
+            // Get a reference to the FragmentManager
+            mFragmentManager = getFragmentManager();
+
+            // Start a new FragmentTransaction
+            FragmentTransaction fragmentTransaction = mFragmentManager
+                    .beginTransaction();
+
+            // Add the TitleFragment to the layout
+            fragmentTransaction.add(R.id.fragment_container,
+                    new FriendsFragment());
+
+            // Commit the FragmentTransaction
+            fragmentTransaction.commit();
+
+            // Add a OnBackStackChangedListener to reset the layout when the back stack changes
+            mFragmentManager
+                    .addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+                        public void onBackStackChanged() {
+                            setLayout();
+                        }
+                    });
 			
 
 		} else {
@@ -48,6 +71,10 @@ public class MainActivity extends Activity implements
 		return findViewById(R.id.fragment_container) == null;
 	
 	}
+
+    private void setLayout() {
+
+    }
 
 	// Display selected Twitter feed
 
