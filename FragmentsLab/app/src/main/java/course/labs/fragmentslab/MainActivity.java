@@ -11,6 +11,7 @@ public class MainActivity extends Activity implements
 		FriendsFragment.SelectionListener {
 
 	private static final String TAG = "Lab-Fragments";
+    private static final int MATCH_PARENT = LinearLayout.LayoutParams.MATCH_PARENT;
 
 	private FriendsFragment mFriendsFragment;
 	private FeedFragment mFeedFragment;
@@ -29,7 +30,6 @@ public class MainActivity extends Activity implements
 			
 			mFriendsFragment = new FriendsFragment();
 
-			//TODO 1 - add the FriendsFragment to the fragment_container
             // Get a reference to the FragmentManager
             mFragmentManager = getFragmentManager();
 
@@ -37,21 +37,12 @@ public class MainActivity extends Activity implements
             FragmentTransaction fragmentTransaction = mFragmentManager
                     .beginTransaction();
 
-            // Add the TitleFragment to the layout
+            // Add the FriendsFragment to the fragment_container
             fragmentTransaction.add(R.id.fragment_container,
                     new FriendsFragment());
 
             // Commit the FragmentTransaction
             fragmentTransaction.commit();
-
-            // Add a OnBackStackChangedListener to reset the layout when the back stack changes
-            mFragmentManager
-                    .addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-                        public void onBackStackChanged() {
-                            setLayout();
-                        }
-                    });
-			
 
 		} else {
 
@@ -72,10 +63,6 @@ public class MainActivity extends Activity implements
 	
 	}
 
-    private void setLayout() {
-
-    }
-
 	// Display selected Twitter feed
 
 	public void onItemSelected(int position) {
@@ -91,13 +78,22 @@ public class MainActivity extends Activity implements
 
 		if (!isInTwoPaneMode()) {
 
-			//TODO 2 - replace the fragment_container with the FeedFragment
-			
+            // Start a new FragmentTransaction
+            FragmentTransaction fragmentTransaction = mFragmentManager
+                    .beginTransaction();
 
-			
+            // replace the fragment_container with the FeedFragment
+            fragmentTransaction.replace(R.id.fragment_container,
+                    mFeedFragment);
 
-			// execute transaction now
-			getFragmentManager().executePendingTransactions();
+            // Add this FragmentTransaction to the backstack
+            fragmentTransaction.addToBackStack(null);
+
+            // Commit the FragmentTransaction
+            fragmentTransaction.commit();
+
+            // Force Android to execute the committed FragmentTransaction
+            mFragmentManager.executePendingTransactions();
 
 		}
 
