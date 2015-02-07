@@ -93,19 +93,22 @@ public class AddToDoActivity extends Activity {
 
 				Log.i(TAG, "Entered cancelButton.OnClickListener.onClick()");
 
-				// TODO - Indicate result and finish
+				// Indicate result and finish
+                setResult(RESULT_CANCELED);
+                finish();
 
 			}
 		});
 
-		// TODO - Set up OnClickListener for the Reset Button
+		// Set up OnClickListener for the Reset Button
 		final Button resetButton = (Button) findViewById(R.id.resetButton);
 		resetButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Log.i(TAG, "Entered resetButton.OnClickListener.onClick()");
 
-				// TODO - Reset data to default values
+				// Reset data to default values
+                setDefaultValues();
 
 			}
 		});
@@ -120,14 +123,9 @@ public class AddToDoActivity extends Activity {
 
 				// gather ToDoItem data
 
-				// TODO - Get the current Priority
-				Priority priority = null;
-
-				// TODO - Get the current Status
-				Status status = null;
-
-				// TODO - Get the current ToDoItem Title
-				String titleString = null;
+				Priority priority = getPriority();
+				Status status = getStatus();
+				String titleString = mTitleText.getText().toString();
 
 				// Construct the Date string
 				String fullDate = dateString + " " + timeString;
@@ -137,11 +135,19 @@ public class AddToDoActivity extends Activity {
 				ToDoItem.packageIntent(data, titleString, priority, status,
 						fullDate);
 
-				// TODO - return data Intent and finish
-
+				// return data Intent and finish
+                setResult(RESULT_OK, data);
+                finish();
 			}
 		});
 	}
+
+    private void setDefaultValues() {
+        mTitleText.setText("");
+        mDefaultStatusButton.setChecked(true);
+        mDefaultPriorityButton.setChecked(true);
+        setDefaultDateTime();
+    }
 
 	// Do not modify below this point.
 
