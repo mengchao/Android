@@ -83,11 +83,9 @@ public class MainActivity extends Activity implements SelectionListener,
 		if (!mIsFresh) {
 			installDownloaderTaskFragment();
 
-			// TODO: Show a Toast message displaying
+			// Show a Toast message displaying
 			// R.string.download_in_progress string
-
-
-			
+            Toast.makeText(this, R.string.download_in_progress_string, Toast.LENGTH_LONG).show();
 			
 			// Set up a BroadcastReceiver to receive an Intent when download
 			// finishes.
@@ -95,14 +93,12 @@ public class MainActivity extends Activity implements SelectionListener,
 				@Override
 				public void onReceive(Context context, Intent intent) {
 
-					// TODO:
 					// Check to make sure this is an ordered broadcast
 					// Let sender know that the Intent was received
 					// by setting result code to MainActivity.IS_ALIVE
-
-
-					
-					
+                    if (isOrderedBroadcast()) {
+                        setResultCode(MainActivity.IS_ALIVE);
+                    }
 					
 				}
 			};
@@ -150,26 +146,22 @@ public class MainActivity extends Activity implements SelectionListener,
 	protected void onResume() {
 		super.onResume();
 
-		// TODO:
 		// Register the BroadcastReceiver to receive a
 		// DATA_REFRESHED_ACTION broadcast
-
-		
-		
+        registerReceiver(mRefreshReceiver, new IntentFilter(DATA_REFRESHED_ACTION));
 		
 	}
 
 	@Override
 	protected void onPause() {
 
-		// TODO:
-		// Unregister the BroadcastReceiver if it has been registered
-		// Note: check that mRefreshReceiver is not null before attempting to
-		// unregister in order to work around an Instrumentation issue
-
-
-		
-		
+        // TODO:
+        // Unregister the BroadcastReceiver if it has been registered
+        // Note: check that mRefreshReceiver is not null before attempting to
+        // unregister in order to work around an Instrumentation issue
+        if (mRefreshReceiver != null) {
+            unregisterReceiver(mRefreshReceiver);
+        }
 		
 		super.onPause();
 
