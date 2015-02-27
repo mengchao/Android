@@ -181,7 +181,7 @@ public class DownloaderTaskFragment extends Fragment {
 						@Override
 						public void onReceive(Context context, Intent intent) {
 
-							// TODO: Check whether or not the MainActivity
+							// Check whether or not the MainActivity
 							// received the broadcast
 							if (getResultCode() != MainActivity.IS_ALIVE) {
 
