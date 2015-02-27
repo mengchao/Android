@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "course.labs.notificationslab"
+        minSdkVersion 18
+        targetSdkVersion 21
+
+        testApplicationId "course.labs.notificationslab.tests"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    androidTestCompile 'com.android.support:support-v4:18.0.0'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+    compile files('D:/Code/Android/NotificationsLab/libs/robotium-solo-5.2.1.jar')
+}
