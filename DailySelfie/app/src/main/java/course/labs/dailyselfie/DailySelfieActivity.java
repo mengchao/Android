@@ -1,11 +1,13 @@
 package course.labs.dailyselfie;
 
+import android.app.AlarmManager;
 import android.app.ListActivity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +20,9 @@ import java.util.Calendar;
 
 public class DailySelfieActivity extends ListActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private SelfieViewAdapter mAdapter;
+    private static final long ALARM_INTERVAL = 2 * 60 * 1000L;
 
+    private SelfieViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class DailySelfieActivity extends ListActivity {
                 startActivity(intent);
             }
         });
+
+        setAlarm();
 
     }
 
@@ -92,5 +97,29 @@ public class DailySelfieActivity extends ListActivity {
             SelfieRecord selfieRecord = new SelfieRecord(timestamp, imageBitmap);
             mAdapter.add(selfieRecord);
         }
+    }
+
+    private void setAlarm() {
+        // Get the AlarmManager Service
+        AlarmManager mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        // Create an Intent to broadcast to the AlarmNotificationReceiver
+        Intent mNotificationReceiverIntent = new Intent(DailySelfieActivity.this,
+                AlarmNotificationReceiver.class);
+
+        // Create an PendingIntent that holds the NotificationReceiverIntent
+        PendingIntent mNotificationReceiverPendingIntent = PendingIntent.getBroadcast(
+                DailySelfieActivity.this, 0, mNotificationReceiverIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // Cancel any existing alarms before setting a new repeating alarm
+        mAlarmManager.cancel(mNotificationReceiverPendingIntent);
+
+        // Set repeating alarm
+        mAlarmManager.setRepeating (
+                AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + ALARM_INTERVAL,
+                ALARM_INTERVAL,
+                mNotificationReceiverPendingIntent);
     }
 }

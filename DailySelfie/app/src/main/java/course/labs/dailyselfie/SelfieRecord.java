@@ -15,21 +15,12 @@ public class SelfieRecord {
 		return mName;
 	}
 
-	public void setName(String name) {
-		this.mName = name;
-	}
-
 	public Bitmap getBitmap() {
 		return mBitmap;
-	}
-
-	public void setBitmap(Bitmap bitmap) {
-		this.mBitmap = bitmap;
 	}
 
 	@Override
 	public String toString(){
 		return mName;
-		
 	}
 }
