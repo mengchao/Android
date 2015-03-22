@@ -19,7 +19,7 @@ public class SelfieRecord {
 		this.mName = name;
 	}
 
-	public Bitmap getmBitmap() {
+	public Bitmap getBitmap() {
 		return mBitmap;
 	}
 

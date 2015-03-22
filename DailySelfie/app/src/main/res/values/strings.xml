@@ -3,6 +3,7 @@
 
     <string name="app_name">DailySelfie</string>
     <string name="selfie_desc_string">Daily Selfie</string>
+    <string name="image_view_desc_string">Image View</string>
     <string name="action_camera">Camera</string>
 
 </resources>

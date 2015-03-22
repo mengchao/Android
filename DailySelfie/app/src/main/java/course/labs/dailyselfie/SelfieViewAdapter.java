@@ -1,8 +1,10 @@
 package course.labs.dailyselfie;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +54,7 @@ public class SelfieViewAdapter extends BaseAdapter {
 			holder = (ViewHolder) newView.getTag();
 		}
 
-		holder.selfie.setImageBitmap(curr.getmBitmap());
+		holder.selfie.setImageBitmap(curr.getBitmap());
 		holder.name.setText(curr.getName());
 
 		return newView;
@@ -70,12 +72,27 @@ public class SelfieViewAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	public ArrayList<SelfieRecord> getList() {
-		return list;
-	}
-
-	public void removeAllViews() {
+	public void removeAllSelfies() {
 		list.clear();
 		this.notifyDataSetChanged();
 	}
+
+    public void saveAllSelfies() {
+        for (SelfieRecord record: list) {
+            String filename = record.getName();
+            Bitmap bitmap = record.getBitmap();
+
+            PictUtil.saveToFile(filename, bitmap);
+        }
+    }
+
+    public void loadAllSelfies() {
+        removeAllSelfies();
+        Map<String, Bitmap> allPics = PictUtil.getAllPics();
+        for (Map.Entry<String, Bitmap> entry: allPics.entrySet()) {
+            SelfieRecord record = new SelfieRecord(entry.getKey(), entry.getValue());
+            list.add(record);
+            this.notifyDataSetChanged();
+        }
+    }
 }

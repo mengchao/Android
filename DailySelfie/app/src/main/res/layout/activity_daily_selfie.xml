@@ -6,16 +6,17 @@
     
     <ImageView
         android:id="@+id/selfie"
-        android:layout_width="160dp"
-        android:layout_height="120dp"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
         android:contentDescription="@string/selfie_desc_string"
        />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:padding="10dp"
+        android:gravity="center_vertical"
         android:singleLine="true"
         android:layout_toRightOf="@id/selfie"
         android:layout_toEndOf="@id/selfie"
